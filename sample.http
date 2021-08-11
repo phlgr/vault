@@ -1,0 +1,15 @@
+### Get all credentials
+GET http://localhost:3000/api/credentials
+
+### Get single credential
+GET http://localhost:3000/api/credentials/ICQ
+
+### Add single credential
+POST http://localhost:3000/api/credentials
+Content-Type: application/json
+
+{
+    "service": "neuefische",
+    "username": "philipp",
+    "password": "alterfisch"
+}
