@@ -27,5 +27,5 @@ export async function addCredential(credential: Credential): Promise<void> {
   const newDB: DB = {
     credentials: newCredentials,
   };
-  await writeFile('src/db.json', JSON.stringify(newDB));
+  await writeFile('src/db.json', JSON.stringify(newDB, null, 2));
 }
