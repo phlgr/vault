@@ -2,6 +2,7 @@ import express from 'express';
 
 import {
   addCredential,
+  deleteCredential,
   getCredential,
   readCredentials,
 } from './utils/credentials';
@@ -37,6 +38,12 @@ app.get('/api/credentials/:service', async (request, response) => {
     console.error(error);
     response.status(404).send(`Could not find service: ${service}`);
   }
+});
+
+app.delete('/api/credentials/:service', async (request, response) => {
+  const { service } = request.params;
+  await deleteCredential(service);
+  response.status(200).send();
 });
 
 app.get('/', (_request, response) => {
