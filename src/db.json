@@ -1,5 +1,8 @@
 {
   "credentials": [
-    { "service": "Google", "username": "philipp", "password": "12345678" }
+    { "service": "Google", "username": "philipp", "password": "12345678" },
+    { "service": "MySpace", "username": "philipp", "password": "12345678" },
+    { "service": "GitHub", "username": "philipp", "password": "12345678" },
+    { "service": "ICQ", "username": "philipp", "password": "12345678" }
   ]
 }
