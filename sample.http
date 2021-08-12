@@ -2,7 +2,8 @@
 GET http://localhost:3000/api/credentials
 
 ### Get single credential
-GET http://localhost:3000/api/credentials/ICQ
+GET http://localhost:3000/api/credentials/neuefische
+Authorization: {{$dotenv MASTERPASSWORD}}
 
 ### Add single credential
 POST http://localhost:3000/api/credentials
