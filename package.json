@@ -30,6 +30,7 @@
     "vite": "^2.4.4"
   },
   "dependencies": {
+    "crypto-js": "^4.1.1",
     "express": "^4.17.1"
   }
 }
