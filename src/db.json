@@ -1,8 +1,29 @@
 {
   "credentials": [
-    { "service": "Google", "username": "philipp", "password": "12345678" },
-    { "service": "MySpace", "username": "philipp", "password": "12345678" },
-    { "service": "GitHub", "username": "philipp", "password": "12345678" },
-    { "service": "ICQ", "username": "philipp", "password": "12345678" }
+    {
+      "service": "Google",
+      "username": "philipp",
+      "password": "12345678"
+    },
+    {
+      "service": "GitHub",
+      "username": "philipp",
+      "password": "12345678"
+    },
+    {
+      "service": "ICQ",
+      "username": "philipp",
+      "password": "12345678"
+    },
+    {
+      "service": "neuefische",
+      "username": "philipp",
+      "password": "U2FsdGVkX18CNBDOCdTJfYuDhPwH76AZl+abTWpnosY="
+    },
+    {
+      "service": "StudiVZ",
+      "username": "philipp",
+      "password": "U2FsdGVkX19w8M4jBU4mPOQLUmgYf4pe96rYTYps8Xg="
+    }
   ]
 }
