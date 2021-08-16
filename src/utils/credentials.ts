@@ -45,14 +45,15 @@ export async function deleteCredential(service: string): Promise<void> {
 
 export async function updateCredential(
   service: string,
-  credential: Credential
+  credential: Credential,
+  key: string
 ): Promise<void> {
-  const credentials = await readCredentials();
-  const filteredCredentials = credentials.filter(
-    (credential) => credential.service !== service
+  const credentialCollection = getCredentialCollection();
+
+  const encryptedCredential = encryptCredential(credential, key);
+
+  await credentialCollection.updateOne(
+    { service },
+    { $set: encryptedCredential }
   );
-  const newDB: DB = {
-    credentials: [...filteredCredentials, credential],
-  };
-  await writeFile('src/db.json', JSON.stringify(newDB, null, 2));
 }

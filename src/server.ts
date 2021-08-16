@@ -65,7 +65,7 @@ app.get('/api/credentials/:service', async (request, response) => {
   }
 });
 
-app.put('/api/credentials/:service', async (request, response) => {
+app.patch('/api/credentials/:service', async (request, response) => {
   const { service } = request.params;
   const credential: Credential = request.body;
   const masterPassword = request.headers.authorization;
