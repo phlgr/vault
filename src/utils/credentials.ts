@@ -1,4 +1,5 @@
 import { readFile, writeFile } from 'fs/promises';
+import type { ObjectId } from 'mongodb';
 import type { Credential, DB } from '../types';
 import { decryptCredential, encryptCredential } from './crypto';
 import { getCredentialCollection } from './database';
@@ -28,14 +29,13 @@ export async function getCredential(
 export async function addCredential(
   credential: Credential,
   key: string
-): Promise<void> {
-  const credentials = await readCredentials();
+): Promise<ObjectId> {
+  const credentialCollection = getCredentialCollection();
 
-  const newCredentials = [...credentials, encryptCredential(credential, key)];
-  const newDB: DB = {
-    credentials: newCredentials,
-  };
-  await writeFile('src/db.json', JSON.stringify(newDB, null, 2));
+  const encryptedCredential = encryptCredential(credential, key);
+
+  const result = await credentialCollection.insertOne(encryptedCredential);
+  return result.insertedId;
 }
 
 export async function deleteCredential(service: string): Promise<void> {

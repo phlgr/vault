@@ -42,8 +42,8 @@ app.post('/api/credentials', async (request, response) => {
     response.status(401).send('Unauthorized request');
     return;
   }
-  await addCredential(credential, masterPassword);
-  return response.status(200).send(credential);
+  const credentialId = await addCredential(credential, masterPassword);
+  return response.status(200).send(credentialId);
 });
 
 app.get('/api/credentials/:service', async (request, response) => {
