@@ -22,9 +22,17 @@ const app = express();
 const port = 3000;
 app.use(express.json());
 
-app.get('/api/credentials', async (_request, response) => {
+app.get('/api/credentials', async (request, response) => {
+  const masterPassword = request.headers.authorization;
+  if (!masterPassword) {
+    response.status(400).send('Authorization header missing');
+    return;
+  } else if (!(await validateMasterpassword(masterPassword))) {
+    response.status(401).send('Unauthorized request');
+    return;
+  }
   try {
-    const credentials = await readCredentials();
+    const credentials = await readCredentials(masterPassword);
     response.status(200).json(credentials);
   } catch (error) {
     console.error(error);

@@ -1,13 +1,14 @@
-import { readFile, writeFile } from 'fs/promises';
 import type { ObjectId } from 'mongodb';
-import type { Credential, DB } from '../types';
+import type { Credential } from '../types';
 import { decryptCredential, encryptCredential } from './crypto';
 import { getCredentialCollection } from './database';
 
-export async function readCredentials(): Promise<Credential[]> {
-  const response = await readFile('src/db.json', 'utf-8');
-  const db: DB = JSON.parse(response);
-  const credentials = db.credentials;
+export async function readCredentials(key: string): Promise<Credential[]> {
+  const credentialCollection = getCredentialCollection();
+  const encryptedCredentials = await credentialCollection.find().toArray();
+  const credentials = encryptedCredentials.map((credential) =>
+    decryptCredential(credential, key)
+  );
   return credentials;
 }
 
