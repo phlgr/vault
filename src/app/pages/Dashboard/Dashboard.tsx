@@ -7,21 +7,20 @@ export default function Dashboard(): JSX.Element {
   const [credentials, setCredentials] = useState<Credential[]>([]);
   const [masterPassword, setMasterPassword] = useState('');
 
-  // inside useEffect we want to
-  // fetch credentials, then setCredentials to fetched credentials
-  // callback fn, deps array
+  async function fetchCredentials() {
+    const response = await fetch(`/api/credentials/`, {
+      headers: {
+        Authorization: masterPassword,
+      },
+    });
+    const credentials = await response.json();
+    setCredentials(credentials);
+  }
 
   useEffect(() => {
-    async function fetchCredentials() {
-      const response = await fetch(`/api/credentials/`, {
-        headers: {
-          Authorization: masterPassword,
-        },
-      });
-      const credentials = await response.json();
-      setCredentials(credentials);
+    if (!masterPassword) {
+      setCredentials([]);
     }
-    fetchCredentials();
   }, [masterPassword]);
 
   return (
@@ -29,13 +28,27 @@ export default function Dashboard(): JSX.Element {
       <h1>Vault</h1>
       <p>Enter words, scramble them, 🎉!</p>
       <Link to="password/marwin">Marwin</Link>
-      <input
-        type="password"
-        value={masterPassword}
-        onChange={(event) => setMasterPassword(event.target.value)}
-      />
-      {credentials.length &&
-        credentials.forEach((credential) => console.log(credential))}
+      <form
+        onSubmit={(event) => {
+          event.preventDefault();
+          fetchCredentials();
+        }}
+      >
+        <input
+          type="password"
+          value={masterPassword}
+          onChange={(event) => setMasterPassword(event.target.value)}
+        />
+        <button type="submit">Submit</button>
+      </form>
+      {credentials.length !== 0 &&
+        credentials.map((credential) => (
+          <div>
+            <p>{credential.service}</p>
+            <p>{credential.username}</p>
+            <p>{credential.password}</p>
+          </div>
+        ))}
     </main>
   );
 }
