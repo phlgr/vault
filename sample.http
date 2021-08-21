@@ -7,18 +7,19 @@ GET http://localhost:3000/api/credentials/altefische
 Authorization: {{$dotenv MASTERPASSWORD}}
 
 ### Add single credential
-POST http://localhost:3000/api/credentials
+POST http://localhost:3001/api/credentials
 Authorization: {{$dotenv MASTERPASSWORD}}
 Content-Type: application/json
 
 {
-    "service": "turbofische",
-    "username": "marwin",
-    "password": "neuerfisch"
+    "service": "atomfische",
+    "username": "leon",
+    "password": "turbofisch"
 }
 
 ### Delete single credential
-DELETE http://localhost:3000/api/credentials/turbofische
+DELETE http://localhost:3001/api/credentials/neuefische
+Authorization: {{$dotenv MASTERPASSWORD}}
 
 ### Modify existing credential
 PATCH http://localhost:3000/api/credentials/turbofische
