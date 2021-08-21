@@ -7,11 +7,31 @@ export default function Add(): JSX.Element {
   const [password, setPassword] = useState<string>('');
   const [masterPassword, setMasterPassword] = useState<string>('');
 
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const newCredential = {
+      service,
+      username,
+      password,
+    };
+    await fetch('/api/credentials', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: masterPassword,
+      },
+      body: JSON.stringify(newCredential),
+    });
+  }
+
   return (
     <main className={styles.container}>
       <h1>Vault</h1>
 
-      <form className={styles.container}>
+      <form
+        className={styles.container}
+        onSubmit={(event) => handleSubmit(event)}
+      >
         <input
           placeholder="Service"
           type="text"
