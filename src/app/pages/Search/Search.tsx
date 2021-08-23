@@ -41,7 +41,7 @@ export default function Search(): JSX.Element {
             onChange={(event) => setService(event.target.value)}
           />
           <input
-            type="text"
+            type="password"
             placeholder="Master Password"
             value={masterPassword}
             onChange={(event) => setMasterPassword(event.target.value)}
