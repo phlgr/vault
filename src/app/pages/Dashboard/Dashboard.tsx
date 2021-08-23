@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import type { Credential } from '../../../types';
 import CredentialCard from '../../components/CredentialCard/CredentialCard';
+import { deleteCredential } from '../../utils/api';
 import styles from './Dashboard.module.css';
 
 export default function Dashboard(): JSX.Element {
@@ -16,6 +17,11 @@ export default function Dashboard(): JSX.Element {
     });
     const credentials = await response.json();
     setCredentials(credentials);
+  }
+
+  async function handleDeleteClick(service: string) {
+    await deleteCredential(service, masterPassword);
+    await fetchCredentials();
   }
 
   useEffect(() => {
@@ -44,7 +50,11 @@ export default function Dashboard(): JSX.Element {
       </form>
       {credentials.length !== 0 &&
         credentials.map((credential) => (
-          <CredentialCard credentialData={credential} />
+          <CredentialCard
+            key={credential._id}
+            credentialData={credential}
+            onDeleteClick={handleDeleteClick}
+          />
         ))}
     </main>
   );
