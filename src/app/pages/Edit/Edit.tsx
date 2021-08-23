@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory, useParams } from 'react-router';
-import { Credential } from '../../../types';
+import { updateCredential } from '../../utils/api';
 import styles from './Edit.module.css';
 
 export default function Edit(): JSX.Element {
@@ -10,21 +10,6 @@ export default function Edit(): JSX.Element {
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [masterPassword, setMasterPassword] = useState<string>('');
-
-  async function updateCredential(
-    credential: Credential,
-    masterPassword: string
-  ) {
-    const response = await fetch(`/api/credentials/${credential.service}`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: masterPassword,
-      },
-      body: JSON.stringify(credential),
-    });
-    return response;
-  }
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
