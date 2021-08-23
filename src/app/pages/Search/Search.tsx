@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import type { Credential } from '../../../types';
 import CredentialCard from '../../components/CredentialCard/CredentialCard';
+import { deleteCredential } from '../../utils/api';
 import styles from './Search.module.css';
 
 export default function Search(): JSX.Element {
@@ -24,11 +25,20 @@ export default function Search(): JSX.Element {
     setCredential(credential);
   }
 
+  async function handleDeleteClick(service: string) {
+    await deleteCredential(service, masterPassword);
+    setCredential(null);
+    setIsError(false);
+  }
+
   return (
     <main className={styles.container}>
       <h1>Vault</h1>
       {credential ? (
-        <CredentialCard credentialData={credential} />
+        <CredentialCard
+          credentialData={credential}
+          onDeleteClick={handleDeleteClick}
+        />
       ) : (
         <form
           className={styles.container}
