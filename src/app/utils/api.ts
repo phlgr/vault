@@ -24,3 +24,13 @@ export async function updateCredential(
   });
   return response;
 }
+
+export async function fetchCredential(
+  service: string,
+  masterPassword: string
+): Promise<Response> {
+  const response = fetch(`/api/credentials/${service}`, {
+    headers: { Authorization: masterPassword },
+  });
+  return response;
+}
