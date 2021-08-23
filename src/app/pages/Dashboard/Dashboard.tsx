@@ -21,7 +21,7 @@ export default function Dashboard(): JSX.Element {
   async function deleteCredential(service: string, masterPassword: string) {
     await fetch(`/api/credentials/${service}`, {
       method: 'DELETE',
-      headers: { Authentication: masterPassword },
+      headers: { Authorization: masterPassword },
     });
   }
 
