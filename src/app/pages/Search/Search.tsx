@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import type { Credential } from '../../../types';
 import CredentialCard from '../../components/CredentialCard/CredentialCard';
-import { deleteCredential } from '../../utils/api';
+import {
+  deleteCredential,
+  updateCredential,
+  fetchCredential,
+} from '../../utils/api';
 import styles from './Search.module.css';
 
 export default function Search(): JSX.Element {
@@ -12,9 +16,7 @@ export default function Search(): JSX.Element {
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const response = await fetch(`/api/credentials/${service}`, {
-      headers: { Authorization: masterPassword },
-    });
+    const response = await fetchCredential(service, masterPassword);
     if (!response.ok) {
       setIsError(true);
       console.log('Credential not found');
@@ -31,6 +33,13 @@ export default function Search(): JSX.Element {
     setIsError(false);
   }
 
+  async function handleEditClick(credential: Credential) {
+    await updateCredential(credential, masterPassword);
+    const response = await fetchCredential(service, masterPassword);
+    const newCredential = await response.json();
+    setCredential(newCredential);
+  }
+
   return (
     <main className={styles.container}>
       <h1>Vault</h1>
@@ -38,6 +47,7 @@ export default function Search(): JSX.Element {
         <CredentialCard
           credentialData={credential}
           onDeleteClick={handleDeleteClick}
+          onEditClick={handleEditClick}
         />
       ) : (
         <form
